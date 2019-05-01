@@ -54,8 +54,7 @@ class Item(Resource):
         if item is None:
             item = ItemModel(name, **data)
         else:
-            item.price = data['price']
-            item.store_id = data['store_id']
+            item = ItemModel(name, **data)
 
         item.save_to_db()
 
@@ -66,5 +65,5 @@ class ItemList(Resource):
     def get(self):
         # This is the lambda function that would work as well...
         # list(map(lambda x: x.json(), ItemModel.query.all()))}
-        return {'items': [item.json() for item in ItemModel.query.all()]}
+        return {'items': [item.json() for item in ItemModel.find_all()]}
 
